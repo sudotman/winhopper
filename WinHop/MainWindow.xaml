@@ -6,15 +6,50 @@
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         Topmost="True"
+        ShowActivated="False"
         AllowsTransparency="True"
         Background="Transparent"
         Width="360"
-        Height="600">
-    <Border CornerRadius="10"
-            Background="#DD111111"
-            BorderBrush="#33FFFFFF"
+        Height="600"
+        MouseEnter="Window_MouseEnter"
+        MouseLeave="Window_MouseLeave">
+
+    <Window.Resources>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Margin" Value="0,2"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd"
+                                        Property="Background"
+                                        Value="#18FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd"
+                                        Property="Background"
+                                        Value="#2AFFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border CornerRadius="14"
+            Background="#E6111111"
+            BorderBrush="#26FFFFFF"
             BorderThickness="1"
-            Padding="10">
+            Padding="12">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -23,13 +58,14 @@
             </Grid.RowDefinitions>
 
             <TextBox x:Name="SearchBox"
-                     Height="34"
+                     Height="36"
                      FontSize="14"
                      Padding="10,6"
-                     Background="#FF1C1C1C"
+                     Background="#FF1B1B1B"
                      Foreground="White"
-                     BorderBrush="#33FFFFFF"
+                     BorderBrush="#26FFFFFF"
                      BorderThickness="1"
+                     CaretBrush="White"
                      KeyDown="SearchBox_KeyDown"
                      TextChanged="SearchBox_TextChanged"/>
 
@@ -38,17 +74,26 @@
                      Background="Transparent"
                      BorderThickness="0"
                      Foreground="White"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     VirtualizingPanel.IsVirtualizing="True"
                      MouseDoubleClick="WindowsList_MouseDoubleClick"
                      KeyDown="WindowsList_KeyDown">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <DockPanel LastChildFill="True" Margin="2">
-                            <Image Width="16"
-                                   Height="16"
-                                   Margin="0,0,8,0"
+                        <DockPanel LastChildFill="True">
+                            <Image Width="18"
+                                   Height="18"
+                                   Margin="0,1,10,0"
                                    Source="{Binding Icon}"/>
-                            <TextBlock Text="{Binding Title}"
-                                       TextTrimming="CharacterEllipsis"/>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}"
+                                           FontWeight="SemiBold"
+                                           TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text="{Binding ProcessName}"
+                                           Opacity="0.7"
+                                           FontSize="12"
+                                           TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
                         </DockPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
