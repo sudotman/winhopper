@@ -167,4 +167,25 @@ internal static class Win32
 
         _ = SetForegroundWindow(hWnd);
     }
+
+    [DllImport("dwmapi.dll")]
+    internal static extern int DwmSetWindowAttribute(
+        IntPtr hwnd,
+        int dwAttribute,
+        ref int pvAttribute,
+        int cbAttribute
+    );
+
+    internal static void TryEnableRoundedCorners(IntPtr hwnd)
+    {
+        // Windows 11: DWMWA_WINDOW_CORNER_PREFERENCE = 33
+        // DWMWCP_ROUND = 2
+        try
+        {
+            int attr = 33;
+            int round = 2;
+            _ = DwmSetWindowAttribute(hwnd, attr, ref round, sizeof(int));
+        }
+        catch { }
+    }
 }

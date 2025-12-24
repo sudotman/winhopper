@@ -7,12 +7,14 @@
         ShowInTaskbar="False"
         Topmost="True"
         ShowActivated="False"
-        AllowsTransparency="True"
-        Background="Transparent"
+        AllowsTransparency="False"
+        Background="#FF0F0F10"
         Width="360"
         Height="600"
-        MouseEnter="Window_MouseEnter"
-        MouseLeave="Window_MouseLeave">
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        MouseLeave="Window_MouseLeave"
+        MouseEnter="Window_MouseEnter">
 
     <Window.Resources>
         <Style TargetType="ListBoxItem">
@@ -46,7 +48,7 @@
     </Window.Resources>
 
     <Border CornerRadius="14"
-            Background="#E6111111"
+            Background="#FF0F0F10"
             BorderBrush="#26FFFFFF"
             BorderThickness="1"
             Padding="12">
@@ -61,7 +63,7 @@
                      Height="36"
                      FontSize="14"
                      Padding="10,6"
-                     Background="#FF1B1B1B"
+                     Background="#FF19191A"
                      Foreground="White"
                      BorderBrush="#26FFFFFF"
                      BorderThickness="1"
