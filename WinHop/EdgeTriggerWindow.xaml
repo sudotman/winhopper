@@ -6,9 +6,10 @@
         ShowInTaskbar="False"
         Topmost="True"
         ShowActivated="False"
+        Focusable="False"
         AllowsTransparency="True"
-        Background="Transparent"
+        Background="#01000000"
         Width="6"
         Height="300">
-    <Grid Background="Transparent"/>
+    <Grid Background="#01000000"/>
 </Window>

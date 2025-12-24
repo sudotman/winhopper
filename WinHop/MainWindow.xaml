@@ -45,21 +45,92 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style TargetType="ToggleButton">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF19191A"/>
+            <Setter Property="BorderBrush" Value="#26FFFFFF"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="MinWidth" Value="56"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="B"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="B" Property="BorderBrush" Value="#40FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="B" Property="Background" Value="#2AFFFFFF"/>
+                                <Setter TargetName="B" Property="BorderBrush" Value="#55FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="B" Property="Opacity" Value="0.45"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
-    <Border CornerRadius="14"
+    <Border x:Name="Root"
+            CornerRadius="14"
             Background="#FF0F0F10"
             BorderBrush="#26FFFFFF"
             BorderThickness="1"
             Padding="12">
+        <Border.RenderTransform>
+            <!-- We animate this so the window stays anchored to the monitor (no cross-monitor sliding). -->
+            <TranslateTransform x:Name="SlideTransform" />
+        </Border.RenderTransform>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="10"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="WinHop"
+                           Foreground="White"
+                           Opacity="0.85"
+                           FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            Margin="0,0,0,0">
+                    <ToggleButton x:Name="LeftEdgeToggle"
+                                  Content="Left"
+                                  Margin="0,0,8,0"
+                                  Checked="EdgeToggle_Changed"
+                                  Unchecked="EdgeToggle_Changed"/>
+                    <ToggleButton x:Name="RightEdgeToggle"
+                                  Content="Right"
+                                  Checked="EdgeToggle_Changed"
+                                  Unchecked="EdgeToggle_Changed"/>
+                </StackPanel>
+            </Grid>
+
             <TextBox x:Name="SearchBox"
+                     Grid.Row="1"
                      Height="36"
                      FontSize="14"
                      Padding="10,6"
@@ -72,7 +143,7 @@
                      TextChanged="SearchBox_TextChanged"/>
 
             <ListBox x:Name="WindowsList"
-                     Grid.Row="2"
+                     Grid.Row="3"
                      Background="Transparent"
                      BorderThickness="0"
                      Foreground="White"

@@ -6,18 +6,20 @@ public partial class EdgeTriggerWindow : Window
 {
     private readonly MainWindow _sidebar;
     public MonitorInfo Monitor { get; }
+    public EdgeTriggerSide Side { get; }
 
-    public EdgeTriggerWindow(MainWindow sidebar, MonitorInfo monitor)
+    public EdgeTriggerWindow(MainWindow sidebar, MonitorInfo monitor, EdgeTriggerSide side)
     {
         InitializeComponent();
         _sidebar = sidebar;
         Monitor = monitor;
+        Side = side;
 
         Loaded += (_, _) => Reposition();
         MouseEnter += (_, _) =>
         {
             if (!_sidebar.IsSidebarVisible)
-                _sidebar.ShowOnMonitor(Monitor, focusSearch: false);
+                _sidebar.ShowOnMonitor(Monitor, Side, focusSearch: false);
         };
     }
 
@@ -26,7 +28,9 @@ public partial class EdgeTriggerWindow : Window
         var wa = Monitor.WorkAreaPx;
         var dpi = Monitor.DpiX;
 
-        Left = MonitorUtil.PxToDip(wa.Left, dpi);
+        Left = Side == EdgeTriggerSide.Left
+            ? MonitorUtil.PxToDip(wa.Left, dpi)
+            : MonitorUtil.PxToDip(wa.Right, dpi) - Width;
         Top = MonitorUtil.PxToDip(wa.Top, dpi);
         Height = MonitorUtil.PxToDip(wa.Height, dpi);
     }
