@@ -51,3 +51,9 @@ A Windows application launcher and window switcher built with WPF. Quickly find 
 
 [Add your license here]
 
+- make it so that we can make it only be triggered on teh far right/ or a specific monitor
+- improve settings ui
+- bring close button
+- bring workspaces/folders
+- bring keyboard navigable ui.
+- fuzzy search
