@@ -4,7 +4,7 @@ arc-inspired window switcher for windows. fast, keyboard-native, minimal.
 
 ![WinHop](https://img.shields.io/badge/.NET-9.0-blue) ![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey)
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Nighthawks_by_Edward_Hopper_1942.jpg/2560px-Nighthawks_by_Edward_Hopper_1942.jpg" alt="WinHop Screenshot" width="600">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Nighthawks_by_Edward_Hopper_1942.jpg/2560px-Nighthawks_by_Edward_Hopper_1942.jpg" alt="WinHop Screenshot" width="500">
 <img src="img/howItLooks.png" alt="WinHop in action" width="150" align="right">
 
 ## what it has so far
