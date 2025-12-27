@@ -2,8 +2,8 @@ namespace WinHop;
 
 public enum EdgeTriggerSide
 {
-    Left,
-    Right,
+    Left = 0,
+    Right = 1,
 }
 
 

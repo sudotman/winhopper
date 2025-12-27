@@ -28,9 +28,13 @@ public partial class EdgeTriggerWindow : Window
         var wa = Monitor.WorkAreaPx;
         var dpi = Monitor.DpiX;
 
+        var leftEdge = MonitorUtil.PxToDip(wa.Left, dpi);
+        var rightEdge = MonitorUtil.PxToDip(wa.Right, dpi);
+
         Left = Side == EdgeTriggerSide.Left
-            ? MonitorUtil.PxToDip(wa.Left, dpi)
-            : MonitorUtil.PxToDip(wa.Right, dpi) - Width;
+            ? leftEdge
+            : rightEdge - Width;
+
         Top = MonitorUtil.PxToDip(wa.Top, dpi);
         Height = MonitorUtil.PxToDip(wa.Height, dpi);
     }

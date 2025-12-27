@@ -6,7 +6,7 @@ namespace WinHop;
 
 internal static class WindowEnumerator
 {
-    public static List<WindowInfo> GetOpenWindows()
+    public static List<WindowInfo> GetOpenWindows(bool includeIcons)
     {
         var result = new List<WindowInfo>();
         var selfPid = (uint)Process.GetCurrentProcess().Id;
@@ -23,7 +23,7 @@ internal static class WindowEnumerator
 
                 var title = Win32.GetWindowTitle(hWnd);
                 var procName = Win32.TryGetProcessName(pid);
-                var icon = IconExtractor.TryGetIconForWindow(hWnd, pid);
+                var icon = includeIcons ? IconExtractor.TryGetIconForWindow(hWnd, pid) : null;
 
                 result.Add(
                     new WindowInfo
@@ -45,4 +45,7 @@ internal static class WindowEnumerator
             .ThenBy(w => w.Title)
             .ToList();
     }
+
+    public static List<WindowInfo> GetOpenWindows()
+        => GetOpenWindows(includeIcons: true);
 }

@@ -7,11 +7,13 @@ internal sealed class EdgeTriggerManager
 {
     private readonly List<EdgeTriggerWindow> _triggers = new();
     private readonly MainWindow _sidebar;
+    private bool _leftEnabled;
+    private bool _rightEnabled;
 
     public EdgeTriggerManager(MainWindow sidebar, bool leftEnabled, bool rightEnabled)
     {
         _sidebar = sidebar;
-        Rebuild(leftEnabled, rightEnabled);
+        UpdateSides(leftEnabled, rightEnabled);
     }
 
     public bool IsMouseOverAnyTrigger() => _triggers.Any(t => t.IsMouseOver);
@@ -22,11 +24,12 @@ internal sealed class EdgeTriggerManager
             t.Reposition();
     }
 
-    public void UpdateSides(bool leftEnabled, bool rightEnabled) => Rebuild(leftEnabled, rightEnabled);
-
-    private void Rebuild(bool leftEnabled, bool rightEnabled)
+    public void UpdateSides(bool leftEnabled, bool rightEnabled)
     {
-        foreach (var t in _triggers)
+        _leftEnabled = leftEnabled;
+        _rightEnabled = rightEnabled;
+
+        foreach (var t in _triggers.ToList())
         {
             try { t.Close(); } catch { }
         }
@@ -34,14 +37,14 @@ internal sealed class EdgeTriggerManager
 
         foreach (var m in MonitorUtil.GetMonitors())
         {
-            if (leftEnabled)
-                Create(m, EdgeTriggerSide.Left);
-            if (rightEnabled)
-                Create(m, EdgeTriggerSide.Right);
+            if (_leftEnabled)
+                CreateTrigger(m, EdgeTriggerSide.Left);
+            if (_rightEnabled)
+                CreateTrigger(m, EdgeTriggerSide.Right);
         }
     }
 
-    private void Create(MonitorInfo monitor, EdgeTriggerSide side)
+    private void CreateTrigger(MonitorInfo monitor, EdgeTriggerSide side)
     {
         var w = new EdgeTriggerWindow(_sidebar, monitor, side);
         _triggers.Add(w);

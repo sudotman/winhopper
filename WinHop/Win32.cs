@@ -168,6 +168,17 @@ internal static class Win32
         _ = SetForegroundWindow(hWnd);
     }
 
+    private const int WM_CLOSE = 0x0010;
+
+    [DllImport("user32.dll")]
+    private static extern bool PostMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+
+    internal static void CloseWindow(IntPtr hWnd)
+    {
+        if (hWnd == IntPtr.Zero) return;
+        PostMessage(hWnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+    }
+
     [DllImport("dwmapi.dll")]
     internal static extern int DwmSetWindowAttribute(
         IntPtr hwnd,
@@ -187,5 +198,24 @@ internal static class Win32
             _ = DwmSetWindowAttribute(hwnd, attr, ref round, sizeof(int));
         }
         catch { }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct POINT
+    {
+        public int X;
+        public int Y;
+    }
+
+    [DllImport("user32.dll")]
+    private static extern bool GetCursorPos(out POINT lpPoint);
+
+    [DllImport("user32.dll")]
+    internal static extern IntPtr GetForegroundWindow();
+
+    internal static (int X, int Y) GetCursorPosition()
+    {
+        GetCursorPos(out var pt);
+        return (pt.X, pt.Y);
     }
 }
