@@ -7,13 +7,16 @@ public partial class EdgeTriggerWindow : Window
     private readonly MainWindow _sidebar;
     public MonitorInfo Monitor { get; }
     public EdgeTriggerSide Side { get; }
+    public int TriggerWidth { get; }
 
-    public EdgeTriggerWindow(MainWindow sidebar, MonitorInfo monitor, EdgeTriggerSide side)
+    public EdgeTriggerWindow(MainWindow sidebar, MonitorInfo monitor, EdgeTriggerSide side, int triggerWidth)
     {
         InitializeComponent();
         _sidebar = sidebar;
         Monitor = monitor;
         Side = side;
+        TriggerWidth = triggerWidth;
+        Width = triggerWidth;
 
         Loaded += (_, _) => Reposition();
         MouseEnter += (_, _) =>

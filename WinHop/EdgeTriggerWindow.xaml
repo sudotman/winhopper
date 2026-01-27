@@ -9,7 +9,6 @@
         Focusable="False"
         AllowsTransparency="True"
         Background="#01000000"
-        Width="6"
         Height="300">
     <Grid Background="#01000000"/>
 </Window>

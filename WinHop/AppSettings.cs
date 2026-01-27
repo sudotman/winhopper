@@ -9,6 +9,7 @@ internal sealed class AppSettings
 {
     public bool TriggerLeft { get; set; } = false;
     public bool TriggerRight { get; set; } = true;
+    public int EdgeTriggerWidth { get; set; } = 20;
     
     public List<string> PinnedProcessNames { get; set; } = new();
     public List<Workspace> Workspaces { get; set; } = new()

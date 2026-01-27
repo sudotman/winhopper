@@ -9,10 +9,12 @@ internal sealed class EdgeTriggerManager
     private readonly MainWindow _sidebar;
     private bool _leftEnabled;
     private bool _rightEnabled;
+    private int _triggerWidth;
 
-    public EdgeTriggerManager(MainWindow sidebar, bool leftEnabled, bool rightEnabled)
+    public EdgeTriggerManager(MainWindow sidebar, bool leftEnabled, bool rightEnabled, int triggerWidth)
     {
         _sidebar = sidebar;
+        _triggerWidth = triggerWidth;
         UpdateSides(leftEnabled, rightEnabled);
     }
 
@@ -28,7 +30,17 @@ internal sealed class EdgeTriggerManager
     {
         _leftEnabled = leftEnabled;
         _rightEnabled = rightEnabled;
+        RebuildTriggers();
+    }
 
+    public void UpdateWidth(int width)
+    {
+        _triggerWidth = width;
+        RebuildTriggers();
+    }
+
+    private void RebuildTriggers()
+    {
         foreach (var t in _triggers.ToList())
         {
             try { t.Close(); } catch { }
@@ -46,7 +58,7 @@ internal sealed class EdgeTriggerManager
 
     private void CreateTrigger(MonitorInfo monitor, EdgeTriggerSide side)
     {
-        var w = new EdgeTriggerWindow(_sidebar, monitor, side);
+        var w = new EdgeTriggerWindow(_sidebar, monitor, side, _triggerWidth);
         _triggers.Add(w);
         w.Show();
     }

@@ -72,7 +72,8 @@ public partial class MainWindow : Window
             LoadWorkspaces();
             BuildWorkspaceContextMenu();
 
-            _edgeTriggers = new EdgeTriggerManager(this, _settings.TriggerLeft, _settings.TriggerRight);
+            _edgeTriggers = new EdgeTriggerManager(this, _settings.TriggerLeft, _settings.TriggerRight, _settings.EdgeTriggerWidth);
+            TriggerWidthSlider.Value = _settings.EdgeTriggerWidth;
         };
 
         SourceInitialized += (_, _) =>
@@ -846,6 +847,21 @@ public partial class MainWindow : Window
         _settings.Save();
 
         _edgeTriggers?.UpdateSides(left, right);
+    }
+
+    private void SettingsButton_Click(object sender, RoutedEventArgs e)
+    {
+        SettingsPopup.IsOpen = !SettingsPopup.IsOpen;
+    }
+
+    private void TriggerWidthSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (_edgeUiInit || _edgeTriggers is null) return;
+
+        var width = (int)e.NewValue;
+        _settings.EdgeTriggerWidth = width;
+        _settings.Save();
+        _edgeTriggers.UpdateWidth(width);
     }
 }
 
